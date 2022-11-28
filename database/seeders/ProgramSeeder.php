@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Program;
 use Illuminate\Database\Seeder;
 
 class ProgramSeeder extends Seeder
@@ -13,6 +14,9 @@ class ProgramSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Program::create([
+            'name' => 'DOCTORADO EN INGENIERÍA',
+            'faculty_id' => 1,
+        ]);
     }
 }

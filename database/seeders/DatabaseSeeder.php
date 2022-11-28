@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Country;
+use App\Models\Faculty;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
 
@@ -25,6 +26,10 @@ class DatabaseSeeder extends Seeder
         ]);
         (new CountrySeeder())->run();
         (new AgreementTypeSeeder())->run();
+        (new UniversitySeeder())->run();
+        (new CampusSeeder()) ->run();
+        (new FacultySeeder())->run();
+        (new ProgramSeeder())->run();
     }
 
 }

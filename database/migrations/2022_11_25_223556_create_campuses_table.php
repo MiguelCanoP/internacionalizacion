@@ -13,7 +13,7 @@ class CreateCampusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('campus', function (Blueprint $table) {
+        Schema::create('campuses', function (Blueprint $table) {
             $table->id();
             $table->string('name', 45);
             $table->string('city', 45);
