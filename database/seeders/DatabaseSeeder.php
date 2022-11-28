@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Country;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
 
@@ -22,5 +23,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'customId' => 3
         ]);
+        (new CountrySeeder())->run();
+        (new AgreementTypeSeeder())->run();
     }
+
 }
