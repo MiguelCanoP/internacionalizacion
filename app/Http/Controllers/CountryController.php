@@ -15,7 +15,8 @@ class CountryController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Country::orderBy('name','ASC')->get());
+
     }
 
     /**

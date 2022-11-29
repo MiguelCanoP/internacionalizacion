@@ -227,35 +227,39 @@ export default {
 
         drawer: false,
         menu:
-            [{
-                name: 'Item individual',
-                href: route('roles.index'),
-                role: 1,
-                icon: 'mdi-calendar'
-            },],
+            [
+                {
+                    name: 'Ver convenios',
+                    href: route('roles.index'),
+                    role: 1,
+                    icon: 'mdi-calendar'
+                },
+            ],
         dropdowns: [
             {
-                name: 'Dropdown 1 usuario',
-                role: 1,
-                active: false,
-                icon: 'mdi-cog-box',
-                items: [
-                    {
-                        name: 'Item 1 dropdown',
-                        href: route('roles.index'),
-                        role: 1,
-                        icon: 'mdi-calendar'
-                    },
-
-                ]
-
-            },
-            {
-                name: 'Dropdown 2 admin',
+                name: 'Gestionar',
                 role: 3,
                 active: false,
                 icon: 'mdi-cog-box',
                 items: [
+                    {
+                        name: 'Convenios',
+                        href: route('roles.index'),
+                        role: 3,
+                        icon: 'mdi-cog-box'
+                    },
+                    {
+                        name: 'Tipos de convenios',
+                        href: route('roles.index'),
+                        role: 3,
+                        icon: 'mdi-cog-box'
+                    },
+                    {
+                        name: 'Universidades',
+                        href: route('universities.view'),
+                        role: 3,
+                        icon: 'mdi-cog-box'
+                    },
                     {
                         name: 'Roles',
                         href: route('roles.index'),

@@ -73,4 +73,8 @@ class User extends Authenticatable
         }
         return $this->role->customId >= $roleNumber;
     }
+
+    public function isAdmin(){
+        return $this->hasRole('admin');
+    }
 }

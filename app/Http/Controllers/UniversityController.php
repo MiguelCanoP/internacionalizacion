@@ -5,45 +5,37 @@ namespace App\Http\Controllers;
 use App\Models\University;
 use App\Http\Requests\StoreUniversityRequest;
 use App\Http\Requests\UpdateUniversityRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class UniversityController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        return response()->json(University::with('country')->get());
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreUniversityRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreUniversityRequest $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\University  $university
-     * @return \Illuminate\Http\Response
+     * @param University $university
+     * @return Response
      */
     public function show(University $university)
     {
@@ -53,8 +45,8 @@ class UniversityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\University  $university
-     * @return \Illuminate\Http\Response
+     * @param University $university
+     * @return Response
      */
     public function edit(University $university)
     {
@@ -64,23 +56,29 @@ class UniversityController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateUniversityRequest  $request
-     * @param  \App\Models\University  $university
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\UpdateUniversityRequest $request
+     * @param int $university
+     * @return JsonResponse
      */
-    public function update(UpdateUniversityRequest $request, University $university)
+    public function update(UpdateUniversityRequest $request, int $university): JsonResponse
     {
-        //
+        University::patch(
+            $university,
+            $request
+        );
+        return response()->json(['message' => 'Universidad creada exitosamente']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\University  $university
-     * @return \Illuminate\Http\Response
+     * @param University $university
+     * @return Response
      */
     public function destroy(University $university)
     {
-        //
+        $university->delete();
+        return response()->json(['message' => 'Universidad borrada exitosamente']);
+
     }
 }

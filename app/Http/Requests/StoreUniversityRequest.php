@@ -13,7 +13,7 @@ class StoreUniversityRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->user()->isAdmin();
     }
 
     /**
@@ -24,7 +24,9 @@ class StoreUniversityRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string',
+            'website' => 'required|string',
+            'country' => 'required|integer',
         ];
     }
 }
