@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Campus;
 use Illuminate\Database\Seeder;
 
 class CampusSeeder extends Seeder
@@ -13,6 +14,16 @@ class CampusSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Campus::create([
+            'name' => 'Campus principal',
+            'city' => 'Madrid',
+            'university_id' => 1,
+        ]);
+
     }
 }
+
+
+
+
+
