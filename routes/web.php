@@ -10,58 +10,57 @@ Route::get('/', function () {
 })->name('default');
 
 /* >>>>> Facultades <<<<<< */
-Route::inertia('faculties','Faculties/Index')->name('faculties.view');
+Route::inertia('faculties', 'Faculties/Index')->name('faculties.view');
 Route::resource('api/faculties', \App\Http\Controllers\Roles\FacultyController::class, [
     'as' => 'api'
 ])->middleware('auth');
 
 /* >>>>> Programas <<<<<< */
-Route::inertia('programs','Programs/Index')->name('programs.view');
+Route::inertia('programs', 'Programs/Index')->name('programs.view');
 Route::resource('api/programs', \App\Http\Controllers\ProgramController::class, [
     'as' => 'api'
 ])->middleware('auth');
 
 /* >>>>> Agreement types <<<<<< */
-Route::inertia('countries','AgreementTypes/Index')->name('countries.view');
+Route::inertia('countries', 'AgreementTypes/Index')->name('countries.view');
 Route::resource('api/countries', \App\Http\Controllers\AgreementTypeController::class, [
     'as' => 'api'
 ])->middleware('auth');
 
 /* >>>>> Agreement types <<<<<< */
-Route::inertia('agreementTypes','AgreementTypes/Index')->name('agreementTypes.view');
+Route::inertia('agreementTypes', 'AgreementTypes/Index')->name('agreementTypes.view');
 Route::resource('api/agreementTypes', \App\Http\Controllers\AgreementTypeController::class, [
     'as' => 'api'
 ])->middleware('auth');
 
 /* >>>>> contry types <<<<<< */
-Route::inertia('countries','Countries/Index')->name('countries.view');
+Route::inertia('countries', 'Countries/Index')->name('countries.view');
 Route::resource('api/countries', \App\Http\Controllers\CountryController::class, [
     'as' => 'api'
 ])->middleware('auth');
 
-/* >>>>> campus types <<<<<< */
-Route::inertia('campus','Campus/Index')->name('campus.view');
-Route::resource('api/campus', \App\Http\Controllers\CampusController::class, [
-    'as' => 'api'
-])->middleware('auth');
 
-
-/* >>>>> campus types <<<<<< */
-Route::inertia('universities','Universities/Index')->name('universities.view');
+/* >>>>> universities types <<<<<< */
+Route::inertia('universities', 'Universities/Index')->name('universities.view');
 Route::resource('api/universities', \App\Http\Controllers\UniversityController::class, [
     'as' => 'api'
 ])->middleware('auth');
-Route::inertia('universities/{university}/campus','Universities/Campus')->name('universities.campus.view');
+Route::get('universities/{university}/campuses', [\App\Http\Controllers\CampusController::class, 'indexView'])->name('universities.campus.view');
+Route::get('api/universities/{university}/campuses', [\App\Http\Controllers\UniversityController::class, 'getCampuses'])->name('api.universities.campuses');
+
 
 /* >>>>> campus types <<<<<< */
-Route::inertia('agreements','Agreements/Index')->name('agreements.view');
-Route::resource('api/agreements', \App\Http\Controllers\AgreementController::class, [
+Route::inertia('campuses', 'Campus/Index')->name('campus.view');
+Route::resource('api/campuses', \App\Http\Controllers\CampusController::class, [
     'as' => 'api'
 ])->middleware('auth');
 
 
-
-
+/* >>>>> agreements types <<<<<< */
+Route::inertia('agreements', 'Agreements/Index')->name('agreements.view');
+Route::resource('api/agreements', \App\Http\Controllers\AgreementController::class, [
+    'as' => 'api'
+])->middleware('auth');
 
 
 /* >>>>>Roles routes <<<<<< */

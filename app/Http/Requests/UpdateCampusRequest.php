@@ -13,7 +13,7 @@ class UpdateCampusRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->user()->isAdmin();
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateCampusRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string',
+            'city' => 'required|string',
         ];
     }
 }

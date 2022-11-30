@@ -20,37 +20,10 @@ class UniversityController extends Controller
         return response()->json(University::with('country')->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
+    public function getCampuses(University $university): JsonResponse
     {
-        //
-    }
+        return response()->json($university->campuses);
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param University $university
-     * @return Response
-     */
-    public function show(University $university)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param University $university
-     * @return Response
-     */
-    public function edit(University $university)
-    {
-        //
     }
 
     /**

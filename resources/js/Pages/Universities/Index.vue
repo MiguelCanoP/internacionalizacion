@@ -251,7 +251,7 @@ export default {
             try {
                 const url = route('api.universities.update', {'university': this.university.id ?? 0});
                 let request = await axios.patch(url, data);
-                showSnackbar(this.snackbar, request.data.message + 'vivaespaña');
+                showSnackbar(this.snackbar, request.data.message);
                 await this.getUniversities();
                 //Clear university information
                 this.university = new University();
