@@ -5,14 +5,14 @@
 
         <v-container>
             <div class="d-flex flex-column align-end mb-8">
-                <h2 class="align-self-start">Gestionar campus de la Universidad {{ university.name }}</h2>
+                <h2 class="align-self-start">Gestionar tipos de acuerdos</h2>
                 <div class="mt-2">
                     <v-btn
                         color="primario"
                         class="grey--text text--lighten-4"
-                        @click="openCreateCampusDialog"
+                        @click="openCreateAgreementTypeDialog"
                     >
-                        Crear campus
+                        Crear acuerdo
                     </v-btn>
                 </div>
 
@@ -23,7 +23,7 @@
                 loading-text="Cargando, por favor espere..."
                 :loading="isLoading"
                 :headers="headers"
-                :items="campuses"
+                :items="agreementTypes"
                 :items-per-page="15"
                 class="elevation-1"
             >
@@ -36,12 +36,12 @@
                                 v-bind="attrs"
                                 v-on="on"
                                 class="mr-2 primario--text"
-                                @click="openEditCampusDialog(item)"
+                                @click="openEditAgreementTypeDialog(item)"
                             >
                                 mdi-pencil
                             </v-icon>
                         </template>
-                        <span>Editar campus</span>
+                        <span>Editar agreementType</span>
                     </v-tooltip>
 
                     <v-tooltip bottom>
@@ -50,7 +50,7 @@
                                 v-bind="attrs"
                                 v-on="on"
                                 class="primario--text"
-                                @click="confirmDeleteCampus(item)"
+                                @click="confirmDeleteAgreementType(item)"
                             >
                                 mdi-delete
                             </v-icon>
@@ -78,14 +78,9 @@
                             <v-row>
                                 <v-col cols="12">
                                     <v-text-field
-                                        label="Nombre del campus *"
+                                        label="Nombre del tipo de acuerdo *"
                                         required
-                                        v-model="campus.name"
-                                    ></v-text-field>
-                                    <v-text-field
-                                        label="Ciudad *"
-                                        required
-                                        v-model="campus.city"
+                                        v-model="agreementType.name"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -104,7 +99,7 @@
                         <v-btn
                             color="primario"
                             text
-                            @click="patchCampus"
+                            @click="patchAgreementType"
                         >
                             Guardar cambios
                         </v-btn>
@@ -113,9 +108,9 @@
             </v-dialog>
             <!--Confirmar borrar rol-->
             <confirm-dialog
-                :show="deleteCampusDialog"
-                @canceled-dialog="deleteCampusDialog = false"
-                @confirmed-dialog="deleteCampus(deletedCampusId)"
+                :show="deleteAgreementTypeDialog"
+                @canceled-dialog="deleteAgreementTypeDialog = false"
+                @confirmed-dialog="deleteAgreementType(deletedAgreementTypeId)"
             >
                 <template v-slot:title>
                     Estas a punto de eliminar el rol seleccionado
@@ -139,7 +134,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import {InertiaLink} from "@inertiajs/inertia-vue";
 import {prepareErrorText, showSnackbar} from "@/HelperFunctions"
 import ConfirmDialog from "@/Components/ConfirmDialog";
-import Campus from "@/models/Campus";
+import AgreementType from "@/models/AgreementType";
 import Snackbar from "@/Components/Snackbar";
 
 export default {
@@ -149,19 +144,16 @@ export default {
         InertiaLink,
         Snackbar,
     },
-    props: {
-        university: Object
-    },
+
     data: () => {
         return {
             //Table info
             headers: [
                 {text: 'Nombre', value: 'name'},
-                {text: 'Ciudad', value: 'city'},
                 {text: 'Acciones', value: 'actions', sortable: false},
             ],
-            campus: new Campus(),
-            campuses: [],
+            agreementType: new AgreementType(),
+            agreementTypes: [],
 
             //Snackbars
             snackbar: {
@@ -170,9 +162,9 @@ export default {
                 timeout: 3000
             },
             //Dialogs
-            dialogHeader: 'Crear nuevo campus',
-            deleteCampusDialog: false,
-            deletedCampusId:0,
+            dialogHeader: 'Crear nuevo acuerdo',
+            deleteAgreementTypeDialog: false,
+            deletedAgreementTypeId:0,
             dialog: false,
 
             //Overlays
@@ -180,32 +172,32 @@ export default {
         }
     },
     async created() {
-        await this.getCampuses();
+        await this.getAgreementTypes();
         this.isLoading = false;
     },
     methods: {
-        openEditCampusDialog: function (campus) {
-            this.campus = Campus.fromModel(campus);
-            this.dialogHeader = `Editando ${campus.name}`;
+        openEditAgreementTypeDialog: function (agreementType) {
+            this.agreementType = AgreementType.fromModel(agreementType);
+            this.dialogHeader = `Editando ${agreementType.name}`;
             this.dialog = true;
         },
-        openCreateCampusDialog: function () {
-            this.campus =  new Campus(null,'','',this.university.id)
-            this.dialogHeader = `Crear nuevo campus`;
+        openCreateAgreementTypeDialog: function () {
+            this.agreementType =  new AgreementType(null,'','',this.agreementType.id)
+            this.dialogHeader = `Crear nuevo acuerdo`;
             this.dialog = true;
         },
 
-        confirmDeleteCampus: function (campus) {
-            this.deletedCampusId = campus.id;
-            this.deleteCampusDialog = true;
+        confirmDeleteAgreementType: function (agreementType) {
+            this.deletedAgreementTypeId = agreementType.id;
+            this.deleteAgreementTypeDialog = true;
         },
 
-        deleteCampus: async function (campusId) {
+        deleteAgreementType: async function (agreementTypeId) {
             try {
-                let request = await axios.delete(route('api.campuses.destroy', {campus: campusId}));
-                this.deleteCampusDialog = false;
+                let request = await axios.delete(route('api.agreementTypes.destroy', {agreementType: agreementTypeId}));
+                this.deleteAgreementTypeDialog = false;
                 showSnackbar(this.snackbar, request.data.message)
-                await this.getCampuses();
+                await this.getAgreementTypes();
 
             } catch (e) {
                 this.snackbar.text = e.response.data.message;
@@ -213,25 +205,25 @@ export default {
             }
 
         },
-        getCampuses: async function () {
-            let request = await axios.get(route('api.universities.campuses', {university: this.university.id}));
-            this.campuses = request.data;
+        getAgreementTypes: async function () {
+            let request = await axios.get(route('api.agreementTypes.index'));
+            this.agreementTypes = request.data;
         },
-        patchCampus: async function () {
-            if (this.campus.hasEmptyProperties()) {
+        patchAgreementType: async function () {
+            if (this.agreementType.hasEmptyProperties()) {
                 showSnackbar(this.snackbar, 'Por favor, completa todos los campos', 'error');
                 return;
             }
             //Recollect information
-            let data = this.campus.toObjectRequest();
+            let data = this.agreementType.toObjectRequest();
 
             try {
-                const url = route('api.campuses.update', {'campus': this.campus.id ?? 0});
+                const url = route('api.agreementTypes.update', {'agreementType': this.agreementType.id ?? 0});
                 let request = await axios.patch(url, data);
                 showSnackbar(this.snackbar, request.data.message);
-                await this.getCampuses();
-                //Clear campus information
-                this.campus =  new Campus(null,'','',this.university.id)
+                await this.getAgreementTypes();
+                //Clear agreementType information
+                this.agreementType =  new AgreementType()
                 this.dialog = false;
 
             } catch (e) {

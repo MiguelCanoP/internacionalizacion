@@ -24,7 +24,7 @@
                 :loading="isLoading"
                 :headers="headers"
                 :items="universities"
-                :items-per-page="5"
+                :items-per-page="15"
                 class="elevation-1"
             >
                 <template v-slot:item.actions="{ item }">

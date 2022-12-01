@@ -15,13 +15,10 @@ class CreateAgreementsTable extends Migration
     {
         Schema::create('agreements', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 45);
-            $table->string('city', 45);
             $table->foreignId('agreement_type_id')->constrained();
-            $table->enum('status', ['vigente', 'en renovacion', 'vencido']);
+            $table->enum('status', ['vigente', 'en renovación', 'vencido']);
             $table->text('information');
             $table->text('contact_info');
-            $table->foreignId('program_id')->constrained();
             $table->foreignId('university_id')->constrained();
             $table->timestamps();
         });

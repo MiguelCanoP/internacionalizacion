@@ -250,7 +250,7 @@ export default {
                     },
                     {
                         name: 'Tipos de convenios',
-                        href: route('roles.index'),
+                        href: route('agreementTypes.view'),
                         role: 3,
                         icon: 'mdi-cog-box'
                     },

@@ -21,7 +21,7 @@ Route::resource('api/programs', \App\Http\Controllers\ProgramController::class, 
     'as' => 'api'
 ])->middleware('auth');
 
-/* >>>>> Agreement types <<<<<< */
+/* >>>>> countries <<<<<< */
 Route::inertia('countries', 'AgreementTypes/Index')->name('countries.view');
 Route::resource('api/countries', \App\Http\Controllers\AgreementTypeController::class, [
     'as' => 'api'
@@ -49,7 +49,7 @@ Route::get('universities/{university}/campuses', [\App\Http\Controllers\CampusCo
 Route::get('api/universities/{university}/campuses', [\App\Http\Controllers\UniversityController::class, 'getCampuses'])->name('api.universities.campuses');
 
 
-/* >>>>> campus types <<<<<< */
+/* >>>>> campus  <<<<<< */
 Route::inertia('campuses', 'Campus/Index')->name('campus.view');
 Route::resource('api/campuses', \App\Http\Controllers\CampusController::class, [
     'as' => 'api'

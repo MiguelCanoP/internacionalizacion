@@ -5,17 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\AgreementType;
 use App\Http\Requests\StoreAgreementTypeRequest;
 use App\Http\Requests\UpdateAgreementTypeRequest;
+use Illuminate\Http\JsonResponse;
 
 class AgreementTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function index()
     {
-        //
+        return response()->json(AgreementType::all());
+
     }
 
     /**
@@ -64,13 +66,17 @@ class AgreementTypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateAgreementTypeRequest  $request
-     * @param  \App\Models\AgreementType  $agreementType
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\UpdateUniversityRequest $request
+     * @param int $university
+     * @return JsonResponse
      */
-    public function update(UpdateAgreementTypeRequest $request, AgreementType $agreementType)
+    public function update(UpdateAgreementTypeRequest $request, int $agreement): JsonResponse
     {
-        //
+        AgreementType::patch(
+            $agreement,
+            $request
+        );
+        return response()->json(['message' => 'Tipo de acuerdo modificado exitosamente']);
     }
 
     /**
@@ -81,6 +87,7 @@ class AgreementTypeController extends Controller
      */
     public function destroy(AgreementType $agreementType)
     {
-        //
+        $agreementType->delete();
+        return response()->json(['message' => 'Tipo de acuerdo borrado exitosamente']);
     }
 }

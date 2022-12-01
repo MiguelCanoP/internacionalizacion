@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Requests\UpdateAgreementTypeRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,8 +28,21 @@ use Illuminate\Database\Eloquent\Model;
 class AgreementType extends Model
 {
     use HasFactory;
+    protected $guarded = [];
     public function agreement(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Agreement::class);
+    }
+
+    public static function patch($id, UpdateAgreementTypeRequest $request)
+    {
+        $data = [
+            'name' => $request->input('name'),
+        ];
+        if ($id === 0) {
+            return self::create($data);
+        }
+
+        return self::updateOrCreate(['id' => $id], $data);
     }
 }
