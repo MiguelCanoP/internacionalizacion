@@ -5,17 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Agreement;
 use App\Http\Requests\StoreAgreementRequest;
 use App\Http\Requests\UpdateAgreementRequest;
+use Illuminate\Http\JsonResponse;
 
 class AgreementController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function index()
     {
-        //
+        return response()->json(Agreement::with('university', 'agreementType', 'programs')->get());
+
     }
 
     /**
@@ -31,7 +33,7 @@ class AgreementController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreAgreementRequest  $request
+     * @param \App\Http\Requests\StoreAgreementRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreAgreementRequest $request)
@@ -42,7 +44,7 @@ class AgreementController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Agreement  $agreement
+     * @param Agreement $agreement
      * @return \Illuminate\Http\Response
      */
     public function show(Agreement $agreement)
@@ -53,7 +55,7 @@ class AgreementController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Agreement  $agreement
+     * @param Agreement $agreement
      * @return \Illuminate\Http\Response
      */
     public function edit(Agreement $agreement)
@@ -64,23 +66,29 @@ class AgreementController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateAgreementRequest  $request
-     * @param  \App\Models\Agreement  $agreement
-     * @return \Illuminate\Http\Response
+     * @param UpdateAgreementRequest $request
+     * @param int $agreement
+     * @return JsonResponse
      */
-    public function update(UpdateAgreementRequest $request, Agreement $agreement)
+    public function update(UpdateAgreementRequest $request, int $agreement): JsonResponse
     {
-        //
+        Agreement::patch(
+            $agreement,
+            $request
+        );
+        return response()->json(['message' => 'Universidad creada exitosamente']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Agreement  $agreement
-     * @return \Illuminate\Http\Response
+     * @param Agreement $agreement
+     * @return JsonResponse
      */
     public function destroy(Agreement $agreement)
     {
-        //
+        $agreement->delete();
+        return response()->json(['message' => 'Acuerdo borrado exitosamente']);
+
     }
 }

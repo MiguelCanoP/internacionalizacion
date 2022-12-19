@@ -78,11 +78,16 @@ const camelToUnderscore = (key) => {
     return result.split(' ').join('_').toLowerCase();
 }
 
+const getCommaSeparatedArray = (array) => {
+ return array.join(', ')
+}
+
 export {
     prepareErrorText,
     checkIfModelHasEmptyProperties,
     clearModelProperties,
     showSnackbar,
     toObjectRequest,
-    getCSRFToken
+    getCSRFToken,
+    getCommaSeparatedArray
 }

@@ -244,7 +244,7 @@ export default {
                 items: [
                     {
                         name: 'Convenios',
-                        href: route('roles.index'),
+                        href: route('agreements.view'),
                         role: 3,
                         icon: 'mdi-cog-box'
                     },

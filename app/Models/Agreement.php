@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Requests\UpdateAgreementRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,21 +39,44 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Agreement whereUniversityId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Agreement whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\University $university
  */
 class Agreement extends Model
 {
     use HasFactory;
-    public function program(): \Illuminate\Database\Eloquent\Relations\belongsTo
+    protected $guarded = [];
+
+    public static function patch($id, UpdateAgreementRequest $request): void
     {
-        return $this->belongsTo(program::class);
+        $data = [
+            'agreement_type_id' => $request->input('agreement_type')['id'],
+            'status' => $request->input('status'),
+            'information' => $request->input('information'),
+            'contact_info' => $request->input('contact_info'),
+            'university_id' => $request->input('university')['id'],
+        ];
+        if ($id === 0) {
+            $agreement = self::create($data);
+        } else {
+            $agreement = self::updateOrCreate(['id' => $id], $data);
+        }
+        $programIds = array_column($request->input('programs'), 'id');
+        $agreement->programs()->sync($programIds);
     }
 
-    public function University(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function programs(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsTo(University::class);
+        return $this->belongsToMany(Program::class);
     }
+
+    public function university(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(University::class)->orderBy('name', 'ASC');
+    }
+
     public function agreementType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(AgreementType::class);
     }
+
 }

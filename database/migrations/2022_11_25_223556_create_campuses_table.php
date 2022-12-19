@@ -17,7 +17,7 @@ class CreateCampusesTable extends Migration
             $table->id();
             $table->string('name', 45);
             $table->string('city', 45);
-            $table->foreignId('university_id')->constrained();
+            $table->foreignId('university_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

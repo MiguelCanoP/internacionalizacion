@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateAgreementRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdateAgreementRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Auth::user()->isAdmin();
     }
 
     /**
@@ -24,7 +25,12 @@ class UpdateAgreementRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'contact_info' => 'required|string|min:10',
+            'information' => 'required|string|min:10',
+            'status' => 'required|in:vigente,en renovación,vencido',
+            'university' => 'required',
+            'programs' => 'required',
+            'agreement_type' => 'required'
         ];
     }
 }

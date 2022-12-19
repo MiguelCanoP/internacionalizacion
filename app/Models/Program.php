@@ -34,8 +34,8 @@ class Program extends Model
     {
         return $this->belongsTo(Faculty::class);
     }
-    public function agreement(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function agreement(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->hasMany(Agreement::class);
+        return $this->belongsToMany(Agreement::class);
     }
 }

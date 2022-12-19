@@ -11,27 +11,20 @@ class ProgramController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        //
+        return response()->json(Program::all());
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreProgramRequest  $request
+     * @param \App\Http\Requests\StoreProgramRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreProgramRequest $request)
@@ -42,7 +35,7 @@ class ProgramController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Program  $program
+     * @param \App\Models\Program $program
      * @return \Illuminate\Http\Response
      */
     public function show(Program $program)
@@ -53,7 +46,7 @@ class ProgramController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Program  $program
+     * @param \App\Models\Program $program
      * @return \Illuminate\Http\Response
      */
     public function edit(Program $program)
@@ -64,8 +57,8 @@ class ProgramController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateProgramRequest  $request
-     * @param  \App\Models\Program  $program
+     * @param \App\Http\Requests\UpdateProgramRequest $request
+     * @param \App\Models\Program $program
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateProgramRequest $request, Program $program)
@@ -76,7 +69,7 @@ class ProgramController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Program  $program
+     * @param \App\Models\Program $program
      * @return \Illuminate\Http\Response
      */
     public function destroy(Program $program)

@@ -15,8 +15,8 @@ class CreateAgreementProgramTable extends Migration
     {
         Schema::create('agreement_program', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('agreement_id')->constrained();
-            $table->foreignId('program_id')->constrained();
+            $table->foreignId('agreement_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('program_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
