@@ -30,6 +30,7 @@ class Role extends Model
     public static function getRoleNumber(string $roleName): int
     {
         $selectedRole = self::where('name', '=', $roleName)->first();
+
         if ($selectedRole === null) {
             throw new \RuntimeException('El rol buscado no existe');
         }

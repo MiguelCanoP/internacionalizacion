@@ -5,14 +5,14 @@
 
         <v-container>
             <div class="d-flex flex-column align-end mb-8">
-                <h2 class="align-self-start">Gestionar tipos de acuerdos</h2>
+                <h2 class="align-self-start">Gestionar tipos de convenios</h2>
                 <div class="mt-2">
                     <v-btn
                         color="primario"
                         class="grey--text text--lighten-4"
                         @click="openCreateAgreementTypeDialog"
                     >
-                        Crear acuerdo
+                        Crear tipo de convenio
                     </v-btn>
                 </div>
 
@@ -41,7 +41,7 @@
                                 mdi-pencil
                             </v-icon>
                         </template>
-                        <span>Editar agreementType</span>
+                        <span>Editar tipo de convenio</span>
                     </v-tooltip>
 
                     <v-tooltip bottom>
@@ -55,7 +55,7 @@
                                 mdi-delete
                             </v-icon>
                         </template>
-                        <span>Borrar universidad</span>
+                        <span>Borrar tipo de convenio</span>
                     </v-tooltip>
 
                 </template>
@@ -78,7 +78,7 @@
                             <v-row>
                                 <v-col cols="12">
                                     <v-text-field
-                                        label="Nombre del tipo de acuerdo *"
+                                        label="Nombre del tipo de convenio *"
                                         required
                                         v-model="agreementType.name"
                                     ></v-text-field>
@@ -162,7 +162,7 @@ export default {
                 timeout: 3000
             },
             //Dialogs
-            dialogHeader: 'Crear nuevo acuerdo',
+            dialogHeader: 'Crear nuevo tipo de convenio',
             deleteAgreementTypeDialog: false,
             deletedAgreementTypeId:0,
             dialog: false,
@@ -183,7 +183,7 @@ export default {
         },
         openCreateAgreementTypeDialog: function () {
             this.agreementType =  new AgreementType(null,'','',this.agreementType.id)
-            this.dialogHeader = `Crear nuevo acuerdo`;
+            this.dialogHeader = `Crear nuevo tipo de convenio`;
             this.dialog = true;
         },
 

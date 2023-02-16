@@ -5,14 +5,14 @@
 
         <v-container>
             <div class="d-flex flex-column align-end mb-8">
-                <h2 class="align-self-start">Gestionar acuerdos</h2>
+                <h2 class="align-self-start">Gestionar convenios</h2>
                 <div>
                     <v-btn
                         color="primario"
                         class="grey--text text--lighten-4"
                         @click="openCreateAgreementDialog"
                     >
-                        Crear nuevo acuerdo
+                        Crear nuevo convenio
                     </v-btn>
                 </div>
 
@@ -42,7 +42,7 @@
                                 mdi-pencil
                             </v-icon>
                         </template>
-                        <span>Editar universidad</span>
+                        <span>Editar convenio</span>
                     </v-tooltip>
 
                     <v-tooltip bottom>
@@ -56,7 +56,7 @@
                                 mdi-delete
                             </v-icon>
                         </template>
-                        <span>Borrar universidad</span>
+                        <span>Borrar convenio</span>
                     </v-tooltip>
 
                 </template>
@@ -83,7 +83,7 @@
                                         color="primario"
                                         v-model="agreement.agreementType"
                                         :items="agreementTypes"
-                                        label="Tipo de acuerdo"
+                                        label="Tipo de convenio"
                                         :item-value="(agreementType)=>agreementType"
                                         :item-text="(agreementType)=>agreementType.name">
                                     </v-select>
@@ -199,7 +199,7 @@ export default {
             headers: [
                 {text: 'ID', value: 'id'},
                 {text: 'Universidad', value: 'university.name'},
-                {text: 'Tipo de acuerdo', value: 'agreementType.name'},
+                {text: 'Tipo de convenio', value: 'agreementType.name'},
                 {text: 'Estado', value: 'status'},
                 {text: 'Información', value: 'information'},
                 {text: 'Contacto', value: 'contactInfo'},
@@ -224,7 +224,7 @@ export default {
                 timeout: 3000
             },
             //Dialogs
-            dialogHeader: 'Crear un nuevo acuerdo',
+            dialogHeader: 'Crear un nuevo convenio',
             deleteAgreementDialog: false,
             deletedAgreementId: 0,
             dialog: false,
@@ -254,12 +254,12 @@ export default {
         openEditAgreementDialog: function (agreement) {
             console.log(agreement);
             this.agreement = Agreement.fromModel(agreement);
-            this.dialogHeader = `Editando con id ${agreement.id}`;
+            this.dialogHeader = `Editando convenio con id ${agreement.id}`;
             this.dialog = true;
         },
         openCreateAgreementDialog: function () {
             this.agreement = new Agreement();
-            this.dialogHeader = `Crear nuevo acuerdo`;
+            this.dialogHeader = `Crear nuevo convenio`;
             this.dialog = true;
         },
 

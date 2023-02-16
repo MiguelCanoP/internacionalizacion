@@ -17,7 +17,7 @@ class AgreementSeeder extends Seeder
         Agreement::create([
             'agreement_type_id' => 1,
             'status' => 'vigente',
-            'information' => 'Información del acuerdo',
+            'information' => 'Información del convenio',
             'contact_info' => 'Para mas informes contact@ospinauniversity.edu.co',
             'university_id' => '1',
         ]);

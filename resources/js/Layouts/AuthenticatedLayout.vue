@@ -230,8 +230,8 @@ export default {
             [
                 {
                     name: 'Ver convenios',
-                    href: route('roles.index'),
-                    role: 1,
+                    href: route('agreements.search'),
+                    role: 0,
                     icon: 'mdi-calendar'
                 },
             ],

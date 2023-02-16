@@ -8,6 +8,10 @@ Route::get('/', function () {
     return Inertia::render('Bienvenido');
 })->name('default');
 
+
+Route::inertia('convenios', 'Agreements/Search')->middleware('auth')->name('agreements.search');
+
+
 /* >>>>> Facultades <<<<<< */
 Route::inertia('faculties', 'Faculties/Index')->middleware('auth')->name('faculties.view');
 Route::resource('api/faculties', \App\Http\Controllers\FacultyController::class, [

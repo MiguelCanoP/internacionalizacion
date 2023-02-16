@@ -76,7 +76,7 @@ class AgreementTypeController extends Controller
             $agreement,
             $request
         );
-        return response()->json(['message' => 'Tipo de acuerdo modificado exitosamente']);
+        return response()->json(['message' => 'Tipo de convenio modificado exitosamente']);
     }
 
     /**
@@ -88,6 +88,6 @@ class AgreementTypeController extends Controller
     public function destroy(AgreementType $agreementType)
     {
         $agreementType->delete();
-        return response()->json(['message' => 'Tipo de acuerdo borrado exitosamente']);
+        return response()->json(['message' => 'Tipo de convenio borrado exitosamente']);
     }
 }

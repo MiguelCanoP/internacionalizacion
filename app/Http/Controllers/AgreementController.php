@@ -88,7 +88,7 @@ class AgreementController extends Controller
     public function destroy(Agreement $agreement)
     {
         $agreement->delete();
-        return response()->json(['message' => 'Acuerdo borrado exitosamente']);
+        return response()->json(['message' => 'convenio borrado exitosamente']);
 
     }
 }
