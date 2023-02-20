@@ -12,7 +12,7 @@ class UniversitySeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         University::factory()
             ->count(50)

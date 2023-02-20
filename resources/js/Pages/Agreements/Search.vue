@@ -133,12 +133,14 @@
                                             subtitle="Pais"
                                         />
                                         <v-divider inset></v-divider>
+                                        <a :href="agreement.university.website" target="_blank" >
+                                            <AgreementCardItem
+                                                icon="mdi-link"
+                                                :title="agreement.university.website"
+                                                subtitle="Página web"
+                                            />
+                                        </a>
 
-                                        <AgreementCardItem
-                                            icon="mdi-link"
-                                            :title="agreement.university.website"
-                                            subtitle="Página web"
-                                        />
 
                                         <v-divider inset></v-divider>
 
@@ -262,4 +264,14 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+a:link { text-decoration: none; }
+
+a:visited { text-decoration: none; }
+
+a:hover { text-decoration: none; }
+
+a:active { text-decoration: none; }
+</style>
 
