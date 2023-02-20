@@ -29,6 +29,8 @@
                                         solo-inverted
                                         hide-details
                                         :items="countries"
+                                        item-text="name"
+                                        item-value="id"
                                         prepend-inner-icon="mdi-earth"
                                         label="Pais"
                                     ></v-select>
@@ -41,6 +43,8 @@
                                         solo-inverted
                                         hide-details
                                         :items="universities"
+                                        item-text="name"
+                                        item-value="id"
                                         prepend-inner-icon="mdi-school"
                                         label="Universidad"
                                     ></v-select>
@@ -52,6 +56,8 @@
                                         solo-inverted
                                         hide-details
                                         :items="agreementTypes"
+                                        item-text="name"
+                                        item-value="id"
                                         prepend-inner-icon="mdi-handshake"
                                         label="Tipo de convenio"
                                     ></v-select>
@@ -63,6 +69,8 @@
                                         solo-inverted
                                         hide-details
                                         :items="statuses"
+                                        item-text="name"
+                                        item-value="id"
                                         prepend-inner-icon="mdi-list-status"
                                         label="Estado"
                                     ></v-select>
@@ -248,6 +256,10 @@ export default {
     },
     async created() {
         await this.getAgreements();
+        await this.getcountries();
+        await this.getUniversities();
+        await this.getagreementTypes();
+        await this.getstatuses()
     },
 
     methods: {
@@ -256,6 +268,29 @@ export default {
             this.agreements = Agreement.createAgreementsFromArray(request.data);
             this.isLoading = false;
         },
+    //     countries , universities , agreementTypes ,status
+
+        getcountries:async function(){
+            let request= await axios.get(route('api.countries.index'));
+            this.countries= request.data;
+            this.isLoading=false;
+        },
+        getUniversities:async function(){
+            let request=await axios.get(route('api.universities.index'));
+            this.universities=request.data;
+            this.isLoading=false;
+        },
+        getagreementTypes:async function(){
+            let request=await axios.get (route('api.agreementTypes.index'));
+            this.agreementTypes=request.data;
+            this.isLoading=false;
+        },
+        getstatuses:async function (){
+            let request= await axios.get(route('api.statuses.index'));
+            this.statuses=request.data;
+            this.isLoading= false;
+        }
+
 
     },
     computed: {
