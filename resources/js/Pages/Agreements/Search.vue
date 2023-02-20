@@ -18,9 +18,11 @@
                             dark
                             color="#0f1f39"
                             class="mb-1"
+                            height="auto"
                         >
-                            <v-row>
-                                <v-col>
+                            <v-row class="py-3 ">
+                                <v-col
+                                    cols="12" sm="6" md="">
                                     <v-select
                                         v-model="country"
                                         flat
@@ -32,7 +34,7 @@
                                     ></v-select>
 
                                 </v-col>
-                                <v-col>
+                                <v-col cols="12" sm="6" md="">
                                     <v-select
                                         v-model="university"
                                         flat
@@ -43,7 +45,7 @@
                                         label="Universidad"
                                     ></v-select>
                                 </v-col>
-                                <v-col>
+                                <v-col cols="12" sm="6" md="">
                                     <v-select
                                         v-model="agreementType"
                                         flat
@@ -54,7 +56,7 @@
                                         label="Tipo de convenio"
                                     ></v-select>
                                 </v-col>
-                                <v-col>
+                                <v-col cols="12" sm="6" md="">
                                     <v-select
                                         v-model="status"
                                         flat
@@ -65,10 +67,10 @@
                                         label="Estado"
                                     ></v-select>
                                 </v-col>
+                                <v-spacer></v-spacer>
+                                <v-col cols="12" md="">
+                                    <div class="d-flex justify-center">
 
-                                <template v-if="$vuetify.breakpoint.mdAndUp">
-                                    <v-spacer></v-spacer>
-                                    <v-col>
                                         <v-btn-toggle
                                             v-model="sortDesc"
                                             mandatory
@@ -90,8 +92,8 @@
                                                 <v-icon>mdi-arrow-down</v-icon>
                                             </v-btn>
                                         </v-btn-toggle>
-                                    </v-col>
-                                </template>
+                                    </div>
+                                </v-col>
                             </v-row>
                         </v-toolbar>
                     </template>
@@ -133,7 +135,7 @@
                                             subtitle="Pais"
                                         />
                                         <v-divider inset></v-divider>
-                                        <a :href="agreement.university.website" target="_blank" >
+                                        <a :href="agreement.university.website" target="_blank">
                                             <AgreementCardItem
                                                 icon="mdi-link"
                                                 :title="agreement.university.website"
@@ -182,7 +184,7 @@
                                                 >
                                                     <v-list-item-icon>
                                                         <v-icon color="#0f1f39">
-                                                            mdi-hand-pointing-right
+                                                            mdi-check-circle
                                                         </v-icon>
                                                     </v-list-item-icon>
                                                     <v-list-item-content>
@@ -266,12 +268,20 @@ export default {
 </script>
 
 <style scoped>
-a:link { text-decoration: none; }
+a:link {
+    text-decoration: none;
+}
 
-a:visited { text-decoration: none; }
+a:visited {
+    text-decoration: none;
+}
 
-a:hover { text-decoration: none; }
+a:hover {
+    text-decoration: none;
+}
 
-a:active { text-decoration: none; }
+a:active {
+    text-decoration: none;
+}
 </style>
 
