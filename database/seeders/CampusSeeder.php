@@ -14,11 +14,14 @@ class CampusSeeder extends Seeder
      */
     public function run()
     {
-        Campus::create([
-            'name' => 'Campus principal',
-            'city' => 'Madrid',
-            'university_id' => 1,
-        ]);
+        for($i = 1; $i <=50;$i++){
+            Campus::create([
+                'name' => 'Campus principal',
+                'city' => 'Ciudad del campus',
+                'university_id' => $i,
+            ]);
+        }
+
 
     }
 }

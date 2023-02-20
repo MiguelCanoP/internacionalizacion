@@ -14,7 +14,9 @@ class CampusFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => 'Campus principal',
+            'city' => 'Madrid',
+            'university_id' => 1,
         ];
     }
 }

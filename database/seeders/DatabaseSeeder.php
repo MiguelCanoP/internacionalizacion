@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         (new CampusSeeder())->run();
         (new FacultySeeder())->run();
         (new ProgramSeeder())->run();
-
+        (new AgreementSeeder())->run();
     }
 
 }

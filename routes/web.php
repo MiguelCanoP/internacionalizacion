@@ -9,7 +9,7 @@ Route::get('/', function () {
 })->name('default');
 
 
-Route::inertia('convenios', 'Agreements/Search')->middleware('auth')->name('agreements.search');
+Route::inertia('convenios', 'Agreements/Search')->name('agreements.search');
 
 
 /* >>>>> Facultades <<<<<< */
@@ -20,6 +20,7 @@ Route::resource('api/faculties', \App\Http\Controllers\FacultyController::class,
 
 /* >>>>> Convenios <<<<<< */
 Route::inertia('agreements', 'Agreements/Index')->middleware('auth')->name('agreements.view');
+Route::get('api/agreements/public', [\App\Http\Controllers\AgreementController::class, 'index'])->name('api.agreements.index.public');
 Route::resource('api/agreements', \App\Http\Controllers\AgreementController::class, [
     'as' => 'api'
 ])->middleware('auth');

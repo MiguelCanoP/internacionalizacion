@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Agreement;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 
 class AgreementSeeder extends Seeder
@@ -14,12 +15,17 @@ class AgreementSeeder extends Seeder
      */
     public function run()
     {
-        Agreement::create([
-            'agreement_type_id' => 1,
-            'status' => 'vigente',
-            'information' => 'Información del convenio',
-            'contact_info' => 'Para mas informes contact@ospinauniversity.edu.co',
-            'university_id' => '1',
-        ]);
+        $faker = Factory::create();
+        for($i = 1; $i <=50;$i++){
+            Agreement::create([
+                'agreement_type_id' => random_int(1,7),
+                'status' => 'vigente',
+                'information' => $faker->paragraph(5),
+                'contact_info' => 'Para mas informes contact@ospinauniversity.edu.co',
+                'university_id' => $i,
+            ]);
+        }
+
+
     }
 }

@@ -71,7 +71,8 @@ class Agreement extends Model
 
     public function university(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(University::class)->orderBy('name', 'ASC');
+        return $this->belongsTo(University::class)->with('country')
+        ->orderBy('name', 'ASC');
     }
 
     public function agreementType(): \Illuminate\Database\Eloquent\Relations\BelongsTo

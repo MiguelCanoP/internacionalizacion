@@ -57,7 +57,7 @@ export default {
         Link
     },
     data: () => ({
-        siteName: 'Internacionalización Unibagué',
+        siteName: 'SORI Unibagué',
     }),
 
     methods: {

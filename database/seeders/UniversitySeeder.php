@@ -14,12 +14,9 @@ class UniversitySeeder extends Seeder
      */
     public function run()
     {
-
-        University::create([
-            'name' => 'Universidad Pontificia Comillas',
-            'website' => 'https://www.comillas.edu/',
-            'country_id' => 199,
-        ]);
+        University::factory()
+            ->count(50)
+            ->create();
 
     }
 }

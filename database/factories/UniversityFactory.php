@@ -14,7 +14,9 @@ class UniversityFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->company . ' University',
+            'website' => $this->faker->safeEmailDomain,
+            'country_id' => random_int(1,20),
         ];
     }
 }

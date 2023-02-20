@@ -18,7 +18,6 @@ export default class Agreement {
             })
             agreements.push(new Agreement(model.id, model.agreement_type, model.status, model.information, model.contact_info, model.university, model.programs));
         })
-        console.log('creando convenios', agreements);
         return agreements;
     }
 
