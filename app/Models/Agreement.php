@@ -53,7 +53,7 @@ class Agreement extends Model
             'status' => $request->input('status'),
             'information' => $request->input('information'),
             'contact_info' => $request->input('contact_info'),
-            'university_id' => $request->input('university')['id'],
+            'university_id' => $request->input('university'),
         ];
         if ($id === 0) {
             $agreement = self::create($data);
@@ -66,7 +66,7 @@ class Agreement extends Model
 
     public function programs(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Program::class);
+        return $this->belongsToMany(Program::class)->with('faculty');
     }
 
     public function university(): \Illuminate\Database\Eloquent\Relations\BelongsTo

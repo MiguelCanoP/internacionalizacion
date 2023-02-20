@@ -14,9 +14,13 @@ class ProgramSeeder extends Seeder
      */
     public function run()
     {
-        Program::create([
-            'name' => 'DOCTORADO EN INGENIERÍA',
-            'faculty_id' => 1,
-        ]);
+        $programs = ['Ingeniería Industrial', 'Ingeniería electrónica', 'Ingeniería de sistemas'];
+        foreach ($programs as $program) {
+            Program::create([
+                'name' => $program,
+                'faculty_id' => 1,
+            ]);
+        }
+
     }
 }

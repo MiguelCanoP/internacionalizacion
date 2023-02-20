@@ -7,7 +7,7 @@
                     :sort-desc="sortDesc"
                     sort-by="university.name"
                     :items-per-page="6"
-                    no-data-text="Cargando..."
+                    no-data-text="Ningún convenio coincide con los criterios de búsqueda ingresados"
                     no-results-text="No se encontró ningún resultado que cumpla tu criterio de búsqueda"
                     :footer-props="{
                         'items-per-page-options': [6,9,15,-1]
@@ -111,116 +111,90 @@
                                     <v-card-title style="background-color:#0f1f39">
                                         <span class="text-h5 white--text">{{ agreement.university.name }}</span>
                                     </v-card-title>
-                                    <v-window v-model="steps[agreement.id]">
-                                        <v-window-item :value="1">
-                                            <v-list>
-                                                <AgreementCardItem
-                                                    icon="mdi-handshake"
-                                                    :title="agreement.agreementType.name"
-                                                    subtitle="Tipo de convenio"
-                                                />
-                                                <v-divider inset></v-divider>
+                                    <v-list>
+                                        <AgreementCardItem
+                                            icon="mdi-handshake-outline"
+                                            :title="agreement.agreementType.name"
+                                            subtitle="Tipo de convenio"
+                                        />
+                                        <v-divider inset></v-divider>
 
-                                                <AgreementCardItem
-                                                    icon="mdi-list-status"
-                                                    :title="agreement.status"
-                                                    subtitle="Estado del convenio"
-                                                />
-                                                <v-divider inset></v-divider>
+                                        <AgreementCardItem
+                                            icon="mdi-list-status"
+                                            :title="agreement.status"
+                                            uppercase
+                                            subtitle="Estado del convenio"
+                                        />
+                                        <v-divider inset></v-divider>
 
-                                                <AgreementCardItem
-                                                    icon="mdi-earth"
-                                                    :title="agreement.university.country.name"
-                                                    subtitle="Pais"
-                                                />
-                                                <v-divider inset></v-divider>
+                                        <AgreementCardItem
+                                            icon="mdi-earth"
+                                            :title="agreement.university.country.name"
+                                            subtitle="Pais"
+                                        />
+                                        <v-divider inset></v-divider>
 
-                                                <AgreementCardItem
-                                                    icon="mdi-link"
-                                                    :title="agreement.university.website"
-                                                    subtitle="Página web"
-                                                />
+                                        <AgreementCardItem
+                                            icon="mdi-link"
+                                            :title="agreement.university.website"
+                                            subtitle="Página web"
+                                        />
 
-                                                <v-divider inset></v-divider>
+                                        <v-divider inset></v-divider>
 
-                                                <AgreementCardItem
-                                                    icon="mdi-link"
-                                                    :title="agreement.contactInfo"
-                                                    subtitle="Información de contacto"
-                                                />
-                                                <v-divider inset></v-divider>
-                                                <AgreementCardItem
-                                                    icon="mdi-information"
-                                                    :title="agreement.information"
-                                                    subtitle="Información importante"
-                                                />
-                                            </v-list>
+                                        <AgreementCardItem
+                                            icon="mdi-email-outline"
+                                            :title="agreement.contactInfo"
+                                            subtitle="Información de contacto"
+                                        />
+                                        <v-divider inset></v-divider>
 
-                                            <v-img
-                                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Harvard_University_logo.svg/799px-Harvard_University_logo.svg.png?20200802104842"
-                                                height="150px"
-                                                contain
-                                            ></v-img>
-                                        </v-window-item>
+                                        <AgreementCardCollapsableItem
+                                            icon="mdi-information"
+                                            :title="agreement.information "
+                                            subtitle="Información importante"
+                                        />
 
-                                        <v-window-item :value="2">
-                                            <v-list>
-                                                <AgreementCardItem
-                                                    icon="mdi-handshake"
-                                                    :title="agreement.agreementType.name"
-                                                    subtitle="Tipo de convenio"
-                                                />
-                                                <v-divider inset></v-divider>
+                                        <v-divider inset></v-divider>
 
-                                                <AgreementCardItem
-                                                    icon="mdi-list-status"
-                                                    :title="agreement.status"
-                                                    subtitle="Estado del convenio"
-                                                />
-                                                <v-divider inset></v-divider>
-
-                                                <AgreementCardItem
-                                                    icon="mdi-earth"
-                                                    :title="agreement.university.country.name"
-                                                    subtitle="Pais"
-                                                />
-                                                <v-divider inset></v-divider>
-                                                <AgreementCardItem
-                                                    icon="mdi-link"
-                                                    :title="agreement.university.website"
-                                                    subtitle="Página web"
-                                                />
-                                                <v-divider inset></v-divider>
-                                            </v-list>
-
-                                            <v-img
-                                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Harvard_University_logo.svg/799px-Harvard_University_logo.svg.png?20200802104842"
-                                                height="150px"
-                                                contain
-                                            ></v-img>
-                                        </v-window-item>
-
-                                    </v-window>
-
-                                    <v-card-actions class="mt-4">
-                                        <v-btn
-                                            :disabled="steps[agreement.id] === 1"
-                                            text
-                                            @click="decrement(agreement.id)"
+                                        <v-list-group
                                         >
-                                            Información general
-                                        </v-btn>
-                                        <v-spacer></v-spacer>
-                                        <v-btn
-                                            :disabled="steps[agreement.id] === 2"
-                                            color="#0f1f39"
-                                            class="white--text"
-                                            depressed
-                                            @click="incrementStep(agreement.id)"
-                                        >
-                                            Más información
-                                        </v-btn>
-                                    </v-card-actions>
+                                            <template v-slot:prependIcon>
+                                                <v-icon color="#0f1f39">mdi-school</v-icon>
+                                            </template>
+
+                                            <template v-slot:activator>
+                                                <v-list-item-content>
+                                                    <v-list-item-title class="text-wrap text-justify custom-title">
+                                                        Haz clic acá para conocer la lista completa de programas
+                                                    </v-list-item-title>
+                                                    <v-list-item-subtitle>
+                                                        Programas para los que aplica el convenio
+                                                    </v-list-item-subtitle>
+                                                </v-list-item-content>
+                                            </template>
+                                            <v-list>
+                                                <v-list-item
+                                                    v-for="program in agreement.programs"
+                                                    :key="program.id"
+                                                >
+                                                    <v-list-item-icon>
+                                                        <v-icon color="#0f1f39">
+                                                            mdi-hand-pointing-right
+                                                        </v-icon>
+                                                    </v-list-item-icon>
+                                                    <v-list-item-content>
+                                                        <v-list-item-title class="text-wrap text-justify custom-title">
+                                                            {{ program.name }}
+                                                        </v-list-item-title>
+                                                        <v-list-item-subtitle>
+                                                            {{ program.faculty.name }}
+                                                        </v-list-item-subtitle>
+                                                    </v-list-item-content>
+                                                </v-list-item>
+                                            </v-list>
+                                        </v-list-group>
+                                    </v-list>
                                 </v-card>
                             </v-col>
                         </v-row>
@@ -238,19 +212,20 @@ import Agreement from "@/models/Agreement";
 import GeneralLayout from "@/Layouts/GeneralLayout";
 import Loading from "@/Pages/Agreements/Components/Loading";
 import AgreementCardItem from "@/Pages/Agreements/Components/AgreementCardItem";
+import AgreementCardCollapsableItem from "@/Pages/Agreements/Components/AgreementCardCollapsableItem";
 
 export default {
     name: "Search",
     components: {
         GeneralLayout,
         Loading,
-        AgreementCardItem
+        AgreementCardItem,
+        AgreementCardCollapsableItem
     },
 
     data() {
         return {
-            //Window
-            steps: [],
+
             //For table
             sortDesc: false,
             agreements: [],
@@ -269,34 +244,11 @@ export default {
     },
     async created() {
         await this.getAgreements();
-        this.setSteps();
     },
 
     methods: {
-        getTitle(title) {
-            return "<span>" + title + "</span>";
-        },
-        incrementStep(stepIndex) {
-            const NewValue = this.steps[stepIndex] + 1;
-            if (NewValue <= 2) {
-                this.steps[stepIndex] = NewValue;
-            }
-        },
-        decrement(stepIndex) {
-            const NewValue = this.steps[stepIndex] - 1;
-            if (NewValue <= 1) {
-                this.steps[stepIndex] = NewValue;
-            }
-        },
-        setSteps: function () {
-            let steps = {};
-            this.agreements.forEach((agreement) => {
-                steps[agreement.id] = 1
-            });
-            this.steps = steps;
-        },
         getAgreements: async function () {
-            let request = await axios.get(route('api.agreements.index.public'));
+            let request = await axios.get(route('api.agreements.index'));
             this.agreements = Agreement.createAgreementsFromArray(request.data);
             this.isLoading = false;
         },

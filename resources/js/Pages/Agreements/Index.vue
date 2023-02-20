@@ -119,7 +119,7 @@
                                         v-model="agreement.university"
                                         :items="universities"
                                         label="Universidad"
-                                        :item-value="(university)=>university"
+                                        :item-value="(university)=>university.id"
                                         :item-text="(university)=>university.name">
                                     </v-select>
                                     <v-select
@@ -296,6 +296,7 @@ export default {
                 delete university.country;
             });
             this.universities = request.data;
+            console.log(universities)
         },
         getAgreementTypes: async function () {
             let request = await axios.get(route('api.agreementTypes.index'));

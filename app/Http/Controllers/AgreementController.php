@@ -20,48 +20,6 @@ class AgreementController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\StoreAgreementRequest $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreAgreementRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Agreement $agreement
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Agreement $agreement)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Agreement $agreement
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Agreement $agreement)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -76,7 +34,7 @@ class AgreementController extends Controller
             $agreement,
             $request
         );
-        return response()->json(['message' => 'Universidad creada exitosamente']);
+        return response()->json(['message' => 'Universidad actualizada exitosamente']);
     }
 
     /**

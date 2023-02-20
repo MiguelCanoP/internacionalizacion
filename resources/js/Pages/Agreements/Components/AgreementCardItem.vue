@@ -6,7 +6,7 @@
             </v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-            <v-list-item-title class="text-wrap text-justify custom-title">
+            <v-list-item-title class="text-justify" :class="{'custom-title':uppercase}">
                 {{ title }}
             </v-list-item-title>
             <v-list-item-subtitle>
@@ -22,7 +22,8 @@ export default {
     props: {
         icon: String,
         title: String,
-        subtitle: String
+        subtitle: String,
+        uppercase: Boolean,
     }
 }
 </script>
