@@ -15,7 +15,17 @@ class Status extends Model
 
     public static function getAvaliable(): array
     {
-        return ['vigente', 'en renovación', 'vencido'];
+        return [
+            [
+                'id' => 'vigente',
+                'name' => 'vigente'],
+            [
+                'id' => 'en renovación',
+                'name' => 'en renovación'],
+            [
+                'id' => 'vencido',
+                'name' => 'vencido']
+        ];
     }
 
 }

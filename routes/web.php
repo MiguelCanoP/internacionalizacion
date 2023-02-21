@@ -32,12 +32,6 @@ Route::resource('api/programs', \App\Http\Controllers\ProgramController::class, 
 ])->middleware('auth');
 Route::get('api/programs', [\App\Http\Controllers\ProgramController::class, 'index'])->name('api.programs.index');
 
-/* >>>>> countries <<<<<< */
-Route::inertia('countries', 'AgreementTypes/Index')->middleware('auth')->name('countries.view');
-Route::resource('api/countries', \App\Http\Controllers\AgreementTypeController::class, [
-    'as' => 'api'
-])->middleware('auth');
-Route::get('api/countries', [\App\Http\Controllers\CountryController::class, 'index'])->name('api.countries.index');
 
 /* >>>>> Agreement types <<<<<< */
 Route::inertia('agreementTypes', 'AgreementTypes/Index')->middleware('auth')->name('agreementTypes.view');
@@ -46,7 +40,7 @@ Route::resource('api/agreementTypes', \App\Http\Controllers\AgreementTypeControl
 ])->middleware('auth');
 Route::get('api/agreementTypes', [\App\Http\Controllers\AgreementTypeController::class, 'index'])->name('api.agreementTypes.index');
 
-/* >>>>> Country types <<<<<< */
+/* >>>>> Countries  <<<<<< */
 Route::inertia('countries', 'Countries/Index')->middleware('auth')->name('countries.view');
 Route::resource('api/countries', \App\Http\Controllers\CountryController::class, [
     'as' => 'api'
@@ -55,11 +49,10 @@ Route::get('api/countries', [\App\Http\Controllers\CountryController::class, 'in
 
 /* >>>>> universities types <<<<<< */
 Route::inertia('universities', 'Universities/Index')->middleware('auth')->name('universities.view');
-Route::get('api/universities', [\App\Http\Controllers\UniversityController::class, 'index'])->name('api.universities.index');
-
 Route::resource('api/universities', \App\Http\Controllers\UniversityController::class, [
     'as' => 'api'
 ])->middleware('auth');
+Route::get('api/universities', [\App\Http\Controllers\UniversityController::class, 'index'])->name('api.universities.index');
 Route::get('universities/{university}/campuses', [\App\Http\Controllers\CampusController::class, 'indexView'])->name('universities.campus.view');
 Route::get('api/universities/{university}/campuses', [\App\Http\Controllers\UniversityController::class, 'getCampuses'])->name('api.universities.campuses');
 

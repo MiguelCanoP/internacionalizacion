@@ -7,12 +7,25 @@
                     :sort-desc="sortDesc"
                     sort-by="university.name"
                     :items-per-page="6"
-                    no-data-text="Ningún convenio coincide con los criterios de búsqueda ingresados"
-                    no-results-text="No se encontró ningún resultado que cumpla tu criterio de búsqueda"
                     :footer-props="{
                         'items-per-page-options': [6,9,15,-1]
                     }"
                 >
+                    <template v-slot:no-data>
+                        <v-row>
+                            <v-col cols="12" class="d-flex flex-column justify-center align-center">
+                                <h1 class="text-center">
+                                    Ningún convenio coincide con los criterios de búsqueda ingresados
+                                </h1>
+                                <v-img
+                                    class="mt-5"
+                                    width="250"
+                                    height="250"
+                                    src="images/no-results.png"/>
+
+                            </v-col>
+                        </v-row>
+                    </template>
                     <template v-slot:header>
                         <v-toolbar
                             dark
@@ -42,7 +55,7 @@
                                         flat
                                         solo-inverted
                                         hide-details
-                                        :items="universities"
+                                        :items="filteredUniversities"
                                         item-text="name"
                                         item-value="id"
                                         prepend-inner-icon="mdi-school"
@@ -69,7 +82,7 @@
                                         solo-inverted
                                         hide-details
                                         :items="statuses"
-                                        item-text="name"
+                                        :item-text="(pStatus)=> capitalize(pStatus.name)"
                                         item-value="id"
                                         prepend-inner-icon="mdi-list-status"
                                         label="Estado"
@@ -225,6 +238,7 @@ import GeneralLayout from "@/Layouts/GeneralLayout";
 import Loading from "@/Pages/Agreements/Components/Loading";
 import AgreementCardItem from "@/Pages/Agreements/Components/AgreementCardItem";
 import AgreementCardCollapsableItem from "@/Pages/Agreements/Components/AgreementCardCollapsableItem";
+import statuses from "statuses";
 
 export default {
     name: "Search",
@@ -241,6 +255,7 @@ export default {
             //For table
             sortDesc: false,
             agreements: [],
+
             isLoading: true,
 
             //For filters
@@ -256,46 +271,90 @@ export default {
     },
     async created() {
         await this.getAgreements();
-        await this.getcountries();
+        await this.getCountries();
         await this.getUniversities();
-        await this.getagreementTypes();
-        await this.getstatuses()
+        await this.getAgreementTypes();
+        await this.getStatuses()
     },
 
     methods: {
+        addAllElementSelectionItem(model, text) {
+            model.unshift({id: '', name: text});
+        },
         getAgreements: async function () {
             let request = await axios.get(route('api.agreements.index'));
             this.agreements = Agreement.createAgreementsFromArray(request.data);
             this.isLoading = false;
         },
-    //     countries , universities , agreementTypes ,status
 
-        getcountries:async function(){
-            let request= await axios.get(route('api.countries.index'));
-            this.countries= request.data;
-            this.isLoading=false;
+        getCountries: async function () {
+            let request = await axios.get(route('api.countries.index'));
+            this.countries = request.data;
+            this.addAllElementSelectionItem(this.countries, 'Todos los paises');
         },
-        getUniversities:async function(){
-            let request=await axios.get(route('api.universities.index'));
-            this.universities=request.data;
-            this.isLoading=false;
+        getUniversities: async function () {
+            let request = await axios.get(route('api.universities.index'));
+            this.universities = request.data;
+            this.addAllElementSelectionItem(this.universities, 'Todas las universidades');
         },
-        getagreementTypes:async function(){
-            let request=await axios.get (route('api.agreementTypes.index'));
-            this.agreementTypes=request.data;
-            this.isLoading=false;
+        getAgreementTypes: async function () {
+            let request = await axios.get(route('api.agreementTypes.index'));
+            this.agreementTypes = request.data;
+            this.addAllElementSelectionItem(this.agreementTypes, 'Todos los tipos de convenios');
+
         },
-        getstatuses:async function (){
-            let request= await axios.get(route('api.statuses.index'));
-            this.statuses=request.data;
-            this.isLoading= false;
+        getStatuses: async function () {
+            let request = await axios.get(route('api.statuses.index'));
+            this.statuses = request.data;
+            console.log(this.statuses);
+            this.addAllElementSelectionItem(this.statuses, 'Todos los estados');
+
+        },
+        matchProperty: function (array, propertyPath, reference) {
+            return array.filter((item) => {
+                const propertyArr = propertyPath.split(".");
+                const propertyValue = propertyArr.reduce((obj, key) => {
+                    return obj && obj[key];
+                }, item);
+                return propertyValue === reference;
+            });
+        },
+        capitalize: function (string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
         }
 
-
     },
+    watch: {
+        country(newCountry) {
+            this.university = '';
+        }
+    },
+
     computed: {
         filteredItems() {
-            return this.agreements;
+            let finalAgreements = this.agreements;
+            if (this.country !== '') {
+                finalAgreements = this.matchProperty(finalAgreements, 'university.country.id', this.country)
+            }
+            if (this.university !== '') {
+                finalAgreements = this.matchProperty(finalAgreements, 'university.id', this.university)
+            }
+            if (this.agreementType !== '') {
+                finalAgreements = this.matchProperty(finalAgreements, 'agreementType.id', this.agreementType)
+            }
+            if (this.status !== '') {
+                finalAgreements = this.matchProperty(finalAgreements, 'status', this.status)
+            }
+            return finalAgreements;
+        },
+
+        filteredUniversities() {
+            let finalUniversities = this.universities;
+            if (this.country !== '') {
+                finalUniversities = this.matchProperty(finalUniversities, 'country.id', this.country);
+                this.addAllElementSelectionItem(finalUniversities, 'Todas las universidades');
+            }
+            return finalUniversities;
         },
 
     },
