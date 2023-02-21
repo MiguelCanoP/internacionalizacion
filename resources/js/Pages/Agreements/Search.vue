@@ -132,7 +132,13 @@
                             >
                                 <v-card>
                                     <v-card-title style="background-color:#0f1f39">
-                                        <span class="text-h5 white--text">{{ agreement.university.name }}</span>
+                                        <span>
+                                            {{ getCountryFlag(agreement.university.country.code)}}
+                                        </span>
+                                        <span
+                                            class="text-h5 white--text ml-2">{{
+                                                agreement.university.name
+                                            }}</span>
                                     </v-card-title>
                                     <v-list>
                                         <AgreementCardItem
@@ -274,7 +280,8 @@ export default {
         await this.getCountries();
         await this.getUniversities();
         await this.getAgreementTypes();
-        await this.getStatuses()
+        await this.getStatuses();
+        await this.getCountryFlag('col');
     },
 
     methods: {
@@ -285,6 +292,10 @@ export default {
             let request = await axios.get(route('api.agreements.index'));
             this.agreements = Agreement.createAgreementsFromArray(request.data);
             this.isLoading = false;
+        },
+        getCountryFlag: function (countryCode) {
+            const codePoints = countryCode.toUpperCase().split("").map((char) => 127397 + char.charCodeAt(0));
+            return String.fromCodePoint(...codePoints);
         },
 
         getCountries: async function () {

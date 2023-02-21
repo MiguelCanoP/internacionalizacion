@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Ospina\CurlCobain\CurlCobain;
 
 class CountrySeeder extends Seeder
 {
@@ -14,8 +15,6 @@ class CountrySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('countries')->delete();
-
         $countries = array(
             array('code' => 'US', 'name' => 'United States'),
             array('code' => 'CA', 'name' => 'Canada'),
