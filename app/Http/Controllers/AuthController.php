@@ -13,7 +13,11 @@ class AuthController extends Controller
 
     public function handleRoleRedirect()
     {
-
+        $user = auth()->user();
+        if ($user->isAdmin()) {
+            return redirect()->route('agreements.view');
+        }
+        abort(401);
     }
 
     public function redirectGoogleLogin()

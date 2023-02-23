@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * App\Models\Country
@@ -29,9 +30,20 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
     use HasFactory;
+
     public function university(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(University::class);
-
     }
+
+    public static function getActiveContries(): \Illuminate\Support\Collection
+    {
+        return DB::table('countries')
+            ->select(['countries.id', 'countries.name'])
+            ->join('universities', 'universities.country_id', '=', 'countries.id')
+            ->orderBy('name', 'ASC')
+            ->get();
+    }
+
+
 }

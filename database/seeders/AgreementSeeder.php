@@ -16,6 +16,13 @@ class AgreementSeeder extends Seeder
     public function run()
     {
         $faker = Factory::create();
+        $possiblePrograms = [
+            [1],
+            [1, 2],
+            [1, 2, 3],
+            [2],
+            [3]
+        ];
         for ($i = 1; $i <= 50; $i++) {
             $agreement = Agreement::create([
                 'agreement_type_id' => random_int(1, 7),
@@ -25,9 +32,7 @@ class AgreementSeeder extends Seeder
                 'university_id' => $i,
             ]);
 
-            $agreement->programs()->sync([1,2,3]);
+            $agreement->programs()->sync($possiblePrograms[random_int(0, count($possiblePrograms) - 1)]);
         }
-
-
     }
 }

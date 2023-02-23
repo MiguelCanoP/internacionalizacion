@@ -17,7 +17,7 @@ class UniversityController extends Controller
      */
     public function index(): JsonResponse
     {
-        return response()->json(University::with('country')->get());
+        return response()->json(University::with('country')->orderBy('name', 'ASC')->get());
     }
 
     public function getCampuses(University $university): JsonResponse

@@ -34,6 +34,20 @@
                             height="auto"
                         >
                             <v-row class="py-3 ">
+                                <v-col cols="12" sm="6" md="">
+                                    <v-select
+                                        v-model="program"
+                                        flat
+                                        solo-inverted
+                                        hide-details
+                                        :items="programs"
+                                        :item-text="(pStatus)=> capitalize(pStatus.name)"
+                                        item-value="id"
+                                        prepend-inner-icon="mdi-book-open-blank-variant"
+                                        label="Programas"
+                                    ></v-select>
+                                </v-col>
+
                                 <v-col
                                     cols="12" sm="6" md="">
                                     <v-select
@@ -62,6 +76,7 @@
                                         label="Universidad"
                                     ></v-select>
                                 </v-col>
+
                                 <v-col cols="12" sm="6" md="">
                                     <v-select
                                         v-model="agreementType"
@@ -88,10 +103,21 @@
                                         label="Estado"
                                     ></v-select>
                                 </v-col>
+                                <v-col cols="12" sm="6" md="">
+                                    <v-btn
+                                        block
+                                        large
+                                        depressed
+                                        color="#0f1f39"
+                                        :value="false"
+                                    >
+                                        <v-icon>mdi-delete</v-icon> Borrar todos los filtros
+                                    </v-btn>
+                                </v-col>
+
                                 <v-spacer></v-spacer>
                                 <v-col cols="12" md="">
                                     <div class="d-flex justify-center">
-
                                         <v-btn-toggle
                                             v-model="sortDesc"
                                             mandatory
@@ -133,7 +159,7 @@
                                 <v-card>
                                     <v-card-title style="background-color:#0f1f39">
                                         <span>
-                                            {{ getCountryFlag(agreement.university.country.code)}}
+                                            {{ getCountryFlag(agreement.university.country.code) }}
                                         </span>
                                         <span
                                             class="text-h5 white--text ml-2">{{
@@ -244,7 +270,6 @@ import GeneralLayout from "@/Layouts/GeneralLayout";
 import Loading from "@/Pages/Agreements/Components/Loading";
 import AgreementCardItem from "@/Pages/Agreements/Components/AgreementCardItem";
 import AgreementCardCollapsableItem from "@/Pages/Agreements/Components/AgreementCardCollapsableItem";
-import statuses from "statuses";
 
 export default {
     name: "Search",
@@ -273,15 +298,17 @@ export default {
             agreementType: '',
             statuses: [],
             status: '',
+            programs: [],
+            program: '',
         }
     },
     async created() {
-        await this.getAgreements();
-        await this.getCountries();
-        await this.getUniversities();
-        await this.getAgreementTypes();
-        await this.getStatuses();
-        await this.getCountryFlag('col');
+        this.getAgreements();
+        this.getCountries();
+        this.getUniversities();
+        this.getAgreementTypes();
+        this.getStatuses();
+        this.getPrograms();
     },
 
     methods: {
@@ -312,7 +339,6 @@ export default {
             let request = await axios.get(route('api.agreementTypes.index'));
             this.agreementTypes = request.data;
             this.addAllElementSelectionItem(this.agreementTypes, 'Todos los tipos de convenios');
-
         },
         getStatuses: async function () {
             let request = await axios.get(route('api.statuses.index'));
@@ -320,6 +346,11 @@ export default {
             console.log(this.statuses);
             this.addAllElementSelectionItem(this.statuses, 'Todos los estados');
 
+        },
+        getPrograms: async function () {
+            let request = await axios.get(route('api.programs.index'));
+            this.programs = request.data;
+            this.addAllElementSelectionItem(this.programs, 'Todos los programas');
         },
         matchProperty: function (array, propertyPath, reference) {
             return array.filter((item) => {
@@ -349,6 +380,18 @@ export default {
             }
             if (this.university !== '') {
                 finalAgreements = this.matchProperty(finalAgreements, 'university.id', this.university)
+            }
+            if (this.program !== '') {
+                console.log(this.program)
+                finalAgreements = finalAgreements.filter((agreement) => {
+                    let doesAgreementHaveProgram = false;
+                    agreement.programs.forEach((program) => {
+                        if (program.id === this.program) {
+                            doesAgreementHaveProgram = true;
+                        }
+                    });
+                    return doesAgreementHaveProgram;
+                })
             }
             if (this.agreementType !== '') {
                 finalAgreements = this.matchProperty(finalAgreements, 'agreementType.id', this.agreementType)

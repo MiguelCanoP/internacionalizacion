@@ -5,17 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Http\Requests\StoreCountryRequest;
 use App\Http\Requests\UpdateCountryRequest;
+use Illuminate\Http\JsonResponse;
 
 class CountryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function index()
     {
-        return response()->json(Country::orderBy('name','ASC')->get());
+        return response()->json(Country::getActiveContries());
 
     }
 
