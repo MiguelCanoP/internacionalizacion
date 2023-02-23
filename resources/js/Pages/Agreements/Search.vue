@@ -109,7 +109,7 @@
                                         large
                                         depressed
                                         color="#0f1f39"
-                                        :value="false"
+                                        @click="deleteFilters"
                                     >
                                         <v-icon>mdi-delete</v-icon> Borrar todos los filtros
                                     </v-btn>
@@ -361,6 +361,13 @@ export default {
                 return propertyValue === reference;
             });
         },
+        deleteFilters(){
+            this.program = '';
+            this.country = '';
+            this.university = '';
+            this.agreementType = '';
+            this.status = '';
+        },
         capitalize: function (string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
@@ -401,6 +408,8 @@ export default {
             }
             return finalAgreements;
         },
+
+
 
         filteredUniversities() {
             let finalUniversities = this.universities;
