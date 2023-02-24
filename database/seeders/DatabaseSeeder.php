@@ -34,10 +34,11 @@ class DatabaseSeeder extends Seeder
         ]);
         (new CountrySeeder())->run();
         (new AgreementTypeSeeder())->run();
-        (new UniversitySeeder())->run();
-        (new CampusSeeder())->run();
+
         (new FacultySeeder())->run();
         (new ProgramSeeder())->run();
+        (new UniversitySeeder())->run();
+        (new CampusSeeder())->run();
         (new AgreementSeeder())->run();
     }
 

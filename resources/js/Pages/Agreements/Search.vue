@@ -55,7 +55,7 @@
                                         flat
                                         solo-inverted
                                         hide-details
-                                        :items="countries"
+                                        :items="filteredCountries"
                                         item-text="name"
                                         item-value="id"
                                         prepend-inner-icon="mdi-earth"
@@ -111,7 +111,8 @@
                                         color="#0f1f39"
                                         @click="deleteFilters"
                                     >
-                                        <v-icon>mdi-delete</v-icon> Borrar todos los filtros
+                                        <v-icon>mdi-delete</v-icon>
+                                        Borrar todos los filtros
                                     </v-btn>
                                 </v-col>
 
@@ -343,7 +344,6 @@ export default {
         getStatuses: async function () {
             let request = await axios.get(route('api.statuses.index'));
             this.statuses = request.data;
-            console.log(this.statuses);
             this.addAllElementSelectionItem(this.statuses, 'Todos los estados');
 
         },
@@ -361,7 +361,7 @@ export default {
                 return propertyValue === reference;
             });
         },
-        deleteFilters(){
+        deleteFilters() {
             this.program = '';
             this.country = '';
             this.university = '';
@@ -370,7 +370,50 @@ export default {
         },
         capitalize: function (string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
-        }
+        },
+
+        getFilteredAgreementsByCountry(agreements = null) {
+            if (agreements === null) {
+                agreements = this.agreements;
+            }
+            return this.matchProperty(agreements, 'university.country.id', this.country)
+        },
+        getFilteredAgreementsByUniversity(agreements = null) {
+            if (agreements === null) {
+                agreements = this.agreements;
+            }
+            return this.matchProperty(agreements, 'university.id', this.university);
+        },
+
+        getFilteredAgreementsByProgram(agreements = null) {
+            if (agreements === null) {
+                agreements = this.agreements;
+            }
+            return agreements.filter((agreement) => {
+                let doesAgreementHaveProgram = false;
+                agreement.programs.forEach((program) => {
+                    if (program.id === this.program) {
+                        doesAgreementHaveProgram = true;
+                    }
+                });
+                return doesAgreementHaveProgram;
+            })
+        },
+        getFilteredAgreementsByAgreementType(agreements = null) {
+            if (agreements === null) {
+                agreements = this.agreements;
+            }
+            return this.matchProperty(agreements, 'agreementType.id', this.agreementType)
+        },
+
+        getFilteredAgreementsByStatus(agreements = null) {
+            if (agreements === null) {
+                agreements = this.agreements;
+            }
+            return this.matchProperty(agreements, 'status', this.status)
+
+        },
+
 
     },
     watch: {
@@ -382,42 +425,55 @@ export default {
     computed: {
         filteredItems() {
             let finalAgreements = this.agreements;
+
+            if (this.program !== '') {
+                finalAgreements = this.getFilteredAgreementsByProgram(finalAgreements);
+            }
             if (this.country !== '') {
-                finalAgreements = this.matchProperty(finalAgreements, 'university.country.id', this.country)
+                finalAgreements = this.getFilteredAgreementsByCountry(finalAgreements);
             }
             if (this.university !== '') {
-                finalAgreements = this.matchProperty(finalAgreements, 'university.id', this.university)
+                finalAgreements = this.getFilteredAgreementsByUniversity(finalAgreements);
             }
-            if (this.program !== '') {
-                console.log(this.program)
-                finalAgreements = finalAgreements.filter((agreement) => {
-                    let doesAgreementHaveProgram = false;
-                    agreement.programs.forEach((program) => {
-                        if (program.id === this.program) {
-                            doesAgreementHaveProgram = true;
-                        }
-                    });
-                    return doesAgreementHaveProgram;
-                })
-            }
+
             if (this.agreementType !== '') {
-                finalAgreements = this.matchProperty(finalAgreements, 'agreementType.id', this.agreementType)
+                finalAgreements = this.getFilteredAgreementsByAgreementType(finalAgreements);
             }
             if (this.status !== '') {
-                finalAgreements = this.matchProperty(finalAgreements, 'status', this.status)
+                finalAgreements = this.getFilteredAgreementsByStatus(finalAgreements);
             }
             return finalAgreements;
         },
 
+        filteredCountries() {
+            let finalCountries = this.countries;
+            let finalAgreements = this.agreements;
+            if (this.program !== '') {
+                finalAgreements = this.getFilteredAgreementsByProgram();
+                finalCountries = finalCountries.filter((country) => {
+                    return finalAgreements.some((agreement) => agreement.university.country.id === country.id)
+                });
+            }
+            this.addAllElementSelectionItem(finalCountries, 'Todos los paises');
 
-
+            return finalCountries;
+        },
         filteredUniversities() {
             let finalUniversities = this.universities;
-            if (this.country !== '') {
-                finalUniversities = this.matchProperty(finalUniversities, 'country.id', this.country);
-                this.addAllElementSelectionItem(finalUniversities, 'Todas las universidades');
+            let finalAgreements = this.agreements;
+
+            if (this.program !== '') {
+                finalAgreements = this.getFilteredAgreementsByProgram(finalAgreements);
             }
+            if (this.country !== '') {
+                finalAgreements = this.getFilteredAgreementsByCountry(finalAgreements);
+            }
+            finalUniversities = finalUniversities.filter((university) => {
+                return finalAgreements.some((agreement) => agreement.university.id === university.id)
+            });
+            this.addAllElementSelectionItem(finalUniversities, 'Todas las universidades');
             return finalUniversities;
+
         },
 
     },
