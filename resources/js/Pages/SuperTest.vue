@@ -1,7 +1,6 @@
 <template>
     <AuthenticatedLayout>
-
-       Bienvenido al inicio de un nuevo proyecto
+       Convenios Internacionales
     </AuthenticatedLayout>
 </template>
 

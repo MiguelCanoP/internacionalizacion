@@ -159,7 +159,7 @@
                             >
                                 <v-card>
                                     <v-card-title style="background-color:#0f1f39">
-                                        <span>
+                                        <span class="text-h5 white--text ml-2">
                                             {{ getCountryFlag(agreement.university.country.code) }}
                                         </span>
                                         <span
