@@ -235,12 +235,12 @@ export default {
         },
         getCountries: async function () {
             let request = await axios.get(route('api.countries.index'));
-            this.countries = request.data;   //this.filterCountries (request.data);
+            this.countries = this.filterCountries (request.data);
         },
-    /*    filterCountries: (data) => {
+        filterCountries: (data) => {
             let set = new Set(data.map(JSON.stringify));
             return Array.from(set).map(JSON.parse);
-        },*/
+        },
         getUniversities: async function () {
             let request = await axios.get(route('api.universities.index'));
             this.universities = request.data;
