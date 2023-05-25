@@ -32,6 +32,7 @@
                             color="#0f1f39"
                             class="mb-1"
                             height="auto"
+                            v-bind:style="{ position: 'fixed', top: '0', left: '0', width: '100%', zIndex: '2' }"
                         >
                             <v-row class="py-3 ">
                                 <v-col cols="12" sm="6" md="">
@@ -144,6 +145,13 @@
                                 </v-col>
                             </v-row>
                         </v-toolbar>
+                        <div>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
                     </template>
 
                     <template v-slot:default="props">
